@@ -117,50 +117,53 @@ class Fakebook {
 
 	/**
 	 * Request friendship
-	 * @param 	int 	$from 	id of the username requesting the friendship
-	 * @param 	int 	$to   	id of the username to ask the friendship to
+	 * @param  int 		$uid   	id of the username to request the friendship to
 	 * @return  boolean	   		true if the requested is sent, false otherwise
 	 */
-	function addFriendRequest($from, $to) {
+	function addFriendRequest($uid) {
+		$myid = $this->getLoggedUserId();
 		// check if they are already friends
-		if ($this->r->sismember("uid:$from:friends", $to)) {
+		if ($this->r->sismember("uid:$myid:friends", $uid)) {
 			return false;
 		}
-		// TODO if there is an incoming request you set the friend relationship
-		
-		// now you can add the friend request
-		$this->r->sadd("uid:$to:friendrequests", $from);
+		// add the request
+		$this->r->sadd("uid:$uid:friendrequests", $myid);
 		return true;
 	}
 
 	/**
 	 * Remove friendship request
-	 * @param 	int 	$from 	id of the username requesting the friendship
-	 * @param 	int 	$to   	id of the username to ask the friendship to
+	 * @param  int 		$uid   	id of the username to refuse
 	 */
-	function removeFriendRequest($from, $to) {
-		$this->r->srem("uid:$to:friendrequests", $from);
+	function removeFriendRequest($uid) {
+		$myid = $this->getLoggedUserId();
+		$this->r->srem("uid:$myid:friendrequests", $uid);
 	}
 
 	/**
 	 * Accept a friend request
-	 * @param  int 		$from 	id of the username who has requested the friendship
-	 * @param  int 		$to   	id of the username who is accepting the request
+	 * @param  int 		$uid   	id of the username to accept
 	 * @return boolean 		    true if the friendship is setted, false otherwise
 	 */
-	function acceptFriendRequest($from, $to) {
+	function acceptFriendRequest($uid) {
+		$myid = $this->getLoggedUserId();
 		// check if there is a request
-		if (!$this->r->sismember("uid:$to:friendrequests", $from)) {
+		if (!$this->r->sismember("uid:$myid:friendrequests", $uid)) {
 			return false;
 		}
 		// add to friends (both sides)
-		$this->r->sadd("uid:$from:friends", $to);
-		$this->r->sadd("uid:$to:friends", $from);
+		$this->r->sadd("uid:$myid:friends", $uid);
+		$this->r->sadd("uid:$uid:friends", $myid);
 		// remove the request (both sides)
-		$this->r->srem("uid:$from:friendrequests", $to);
-		$this->r->srem("uid:$to:friendrequests", $from);
+		$this->r->srem("uid:$uid:friendrequests", $myid);
+		$this->r->srem("uid:$myid:friendrequests", $uid);
 
 		return true;
+	}
+
+	function getFriendRequests() {
+		$uid = $this->getLoggedUserId();
+		return $this->r->smembers("uid:$uid:friendrequests");
 	}
 
 	/**

@@ -5,7 +5,9 @@ $code = $_GET['code'];
 
 $messages = array(
 	1 => 'Friendship requested',
-	2 => 'Status published'
+	2 => 'Status published',
+	3 => 'Friend request accepted',
+	4 => 'Friend request refused'
 	);
 ?>
 
@@ -13,11 +15,7 @@ $messages = array(
 <html lang="en">
 <?php include 'head.inc.php'; ?>
 <body>
-	<div id="top-bar">
-		<div>
-			<span id="logo"><a href="index.php"><?= TITLE ?></a></span>
-		</div>
-	</div>
+	<?php include 'top-bar.inc.php'; ?>
 	<div id="container" style="margin-top: 50px;">
 		<h1>Ok</h1>
 		<?= $messages[$code]; ?><br><br>

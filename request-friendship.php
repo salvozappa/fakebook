@@ -16,7 +16,7 @@ if (!$myId) {
 	header("location: index.php");
 }
 
-if ($fakebook->addFriendRequest($myId, $uid)) {
+if ($fakebook->addFriendRequest($uid)) {
 	$fakebook->ok(1);		// request sent
 } else {
 	$fakebook->error(6); 	// they are already friends

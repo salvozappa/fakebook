@@ -70,6 +70,10 @@ body {
 	cursor: pointer;
 }
 
+.top-button.selected {
+	background-color: white;
+}
+
 .top-button:hover {
 	background-color: #23BD5C;
 }
