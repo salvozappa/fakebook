@@ -6,7 +6,8 @@ $pageTitle = 'Homepage';
 
 $fakebook = new Fakebook();
 
-if (!$fakebook->isLoggedIn()) {
+// if the user is not logged, redirect to the login page
+if (!$fakebook->getLoggedUserId()) {
 	header("location: index.php");
 }
 
@@ -29,6 +30,10 @@ if (!$fakebook->isLoggedIn()) {
 			<p><?= $fakebook->getFullName() ?></p>
 			<a href="logout.php">Logout</a>
 		</aside>
+		<form id="new-status" method="post" action="push-status.php">
+			<input type="text" name="message" placeholder="Say something..!">
+			<input type="submit">
+		</form>
 		<section id="content">
 			<h1 style="margin-top: 0;">News feed:</h1>
 		</section>

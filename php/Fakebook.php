@@ -23,7 +23,7 @@ class Fakebook {
 		return $token;
 	}
 
-	function error($code) {
+	function error($code = 7) {
 		header("location: error.php?code=$code");;
 	}
 
@@ -72,10 +72,10 @@ class Fakebook {
 	}
 
 	/**
-	 * Check if the user is logged, it checks the token string stored in the cookie
+	 * Check if the user is logged, it looks for the token string in the cookie
 	 * @return int  	user id, 0 if is not logged
 	 */
-	function isLoggedIn() {
+	function getLoggedUserId() {
 		if (isset($_COOKIE['token'])) {
 			$clientToken = $_COOKIE['token'];
 			if ($userId = $this->r->get("token:$clientToken")) {
@@ -91,7 +91,7 @@ class Fakebook {
 	 * Logout the user and set a new token string
 	 */
 	function logout() {
-		if ($userId = $this->isLoggedIn()) {
+		if ($userId = $this->getLoggedUserId()) {
 			$newToken = Fakebook::generateToken();
 			$oldToken = $this->r->get("uid:$userId:token");
 
@@ -107,7 +107,7 @@ class Fakebook {
 	 */
 	function getFullName($uid = 0) {
 		if ($uid == 0) {
-			$uid = $this->isLoggedIn();
+			$uid = $this->getLoggedUserId();
 		}
 		if ($uid == 0) {
 			return;
@@ -153,12 +153,13 @@ class Fakebook {
 		if (!$this->r->sismember("uid:$to:friendrequests", $from)) {
 			return false;
 		}
-		// remove the request (both sides)
-		$this->r->srem("uid:$from:friendrequests", $to);
-		$this->r->srem("uid:$to:friendrequests", $from);
 		// add to friends (both sides)
 		$this->r->sadd("uid:$from:friends", $to);
 		$this->r->sadd("uid:$to:friends", $from);
+		// remove the request (both sides)
+		$this->r->srem("uid:$from:friendrequests", $to);
+		$this->r->srem("uid:$to:friendrequests", $from);
+
 		return true;
 	}
 
@@ -177,9 +178,27 @@ class Fakebook {
 	}
 
 	function isFriend($userId) {
-		if ($myUserId = $this->isLoggedIn()) {
+		if ($myUserId = $this->getLoggedUserId()) {
 			return $this->r->sismember("uid:$myUserId:friends", $userId);
 		}
 		return false;
+	}
+
+	/**
+	 * Publish a new user status
+	 * @param  string 	$message 	status message
+	 */
+	function pushStatus($message) {
+		// get the logged user id
+		$uid = $this->getLoggedUserId();
+		// build the status string
+		$status = $uid . '|' . $message . '|' . time();
+		// push the status in the user statuses list
+		$this->r->rpush("uid:$uid:statuses");
+		// push the status in every friend's updates list
+		$friends = $this->r->smembers("uid:$uid:friends");
+		foreach ($friends as $fid) {
+			$this->r->rpush("uid:$fid:updates");
+		}
 	}
 }

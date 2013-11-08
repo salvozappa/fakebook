@@ -4,7 +4,8 @@ $pageTitle = 'Ok';
 $code = $_GET['code'];
 
 $messages = array(
-	1 => 'Friendship requested'
+	1 => 'Friendship requested',
+	2 => 'Status published'
 	);
 ?>
 

@@ -5,7 +5,8 @@ $pageTitle = 'Welcome';
 
 $fakebook = new Fakebook();
 
-if ($fakebook->isLoggedIn()) {
+// if the user is already logged, redirect to homepage
+if ($fakebook->getLoggedUserId()) {
 	header("location: home.php");
 }
 

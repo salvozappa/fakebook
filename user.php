@@ -14,7 +14,7 @@ if (!$fakebook->userExists($uid)) {
 	$fakebook->error(5);	// User not found
 }
 
-if (!$fakebook->isLoggedIn()) {
+if (!$fakebook->getLoggedUserId()) {
 	header("location: index.php");
 }
 

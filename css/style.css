@@ -53,6 +53,13 @@ body {
 	margin-right: 20px;
 }
 
+#new-status input[type=text] {
+	font-size: 1.1em;
+	padding: 5px;
+	margin-top: 30px;
+	width: 300px;
+}
+
 .top-button:first-of-type {
 	margin-left: 10px;
 }

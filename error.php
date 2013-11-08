@@ -9,7 +9,8 @@ $messages = array(
 	3 => 'Wrong username or password',
 	4 => 'Missing parameters',
 	5 => 'Sorry but this user doesn\'t exists :(',
-	6 => 'It seems you are friends already!'
+	6 => 'It seems you are friends already!',
+	7 => 'Ops, something wrong happened :('
 	);
 ?>
 

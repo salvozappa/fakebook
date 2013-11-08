@@ -10,9 +10,9 @@ $uid = $_GET['id'];
 
 $fakebook = new Fakebook();
 
-$myId = $fakebook->isLoggedIn();
+$myId = $fakebook->getLoggedUserId();
 
-if ($myId != 0) {
+if (!$myId) {
 	header("location: index.php");
 }
 
