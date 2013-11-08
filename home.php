@@ -16,15 +16,7 @@ if (!$fakebook->getLoggedUserId()) {
 <html lang="en">
 <?php include 'head.inc.php'; ?>
 <body>
-	<div id="top-bar">
-		<div>
-			<span id="logo"><a href="index.php"><?= TITLE ?></a></span>
-			<img class="top-button" src="img/friend-requests.png">
-			<img class="top-button" src="img/messages.png">
-			<img class="top-button" src="img/notifications.png">
-			<input id="search" type="text">
-		</div>
-	</div>
+	<?php include 'top-bar.inc.php'; ?>
 	<div id="container">
 		<aside id="left-column">
 			<p><?= $fakebook->getFullName() ?></p>

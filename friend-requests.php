@@ -16,26 +16,14 @@ if (!$fakebook->getLoggedUserId()) {
 <html lang="en">
 <?php include 'head.inc.php'; ?>
 <body>
-	<div id="top-bar">
-		<div>
-			<span id="logo"><a href="index.php"><?= TITLE ?></a></span>
-			<img class="top-button" src="img/friend-requests.png">
-			<img class="top-button" src="img/messages.png">
-			<img class="top-button" src="img/notifications.png">
-			<input id="search" type="text">
-		</div>
-	</div>
+	<?php include 'top-bar.inc.php'; ?>
 	<div id="container">
 		<aside id="left-column">
 			<p><?= $fakebook->getFullName() ?></p>
 			<a href="logout.php">Logout</a>
 		</aside>
-		<form id="new-status" method="post" action="push-status.php">
-			<input type="text" name="message" placeholder="Say something..!">
-			<input type="submit">
-		</form>
 		<section id="content">
-			<h1 style="margin-top: 0;">News feed:</h1>
+			<h1 style="margin-top: 0;">Friends requests:</h1>
 		</section>
 	</div>
 </body>
