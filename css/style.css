@@ -1,0 +1,89 @@
+body {
+	margin: 0;
+	font-family: 'Open Sans', sans-serif;
+}
+
+#top-bar {
+	background-color: #009D3B;
+	height: 40px;
+	-webkit-box-shadow: 0px 1px 1px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow:    0px 1px 1px rgba(50, 50, 50, 0.75);
+	box-shadow:         0px 1px 1px rgba(50, 50, 50, 0.75);
+}
+
+#top-bar > div {
+	width: 1000px;
+	color: white;
+	margin: auto;
+}
+
+#logo {
+	font-size: 1.5em;
+	line-height: 40px;
+}
+
+#logo a {
+	text-decoration: none;
+	color: white!important;
+}
+
+#search {
+	height: 20px;
+	position: relative;
+	top: -7px;
+	left: 5px;
+	width: 350px;
+}
+
+#container {
+	width: 1000px;
+	margin: auto;
+}
+
+#left-column, #content {
+	padding: 20px;
+}
+
+#left-column {
+	box-sizing: border-box;
+	width: 200px;
+	float: left;
+	height: 500px;
+	border-right: 1px solid #ccc;
+	margin-right: 20px;
+}
+
+.top-button:first-of-type {
+	margin-left: 10px;
+}
+
+.top-button {
+	position: relative;
+	top: 5px;
+	cursor: pointer;
+}
+
+.top-button:hover {
+	background-color: #23BD5C;
+}
+
+.index-form {
+	width: 495px;
+	display: inline-block;
+}
+
+.index-form input[type=text], .index-form input[type=password] {
+	display: block;
+	font-size: 1.1em;
+	padding: 5px;
+	margin-bottom: 10px;
+	width: 300px;
+}
+
+.index-form .button {
+	margin-left: 250px;
+}
+
+.button {
+	font-size: 1.2em;
+}
