@@ -208,12 +208,12 @@ class Fakebook {
 		$pid = $this->r->incr('global:nextPostId');
 		// build the status string
 		$status = $pid . '|' . $uid . '|' . $message . '|' . time();
-		// push the status in the user statuses list
-		$this->r->rpush("uid:$uid:statuses", $status);
-		// push the status in every friend's updates list
+		// prepend the status in the user statuses list
+		$this->r->lpush("uid:$uid:statuses", $status);
+		// prepend the status in every friend's updates list
 		$friends = $this->r->smembers("uid:$uid:friends");
 		foreach ($friends as $fid) {
-			$this->r->rpush("uid:$fid:updates", $status);
+			$this->r->lpush("uid:$fid:updates", $status);
 		}
 	}
 
@@ -225,6 +225,28 @@ class Fakebook {
 	function getUserIdFromFullName($fullName) {
 		$fullName = strtolower($fullName);
 		return $this->r->get("fullname:$fullName:uid");
+	}
+
+	/**
+	 * Send message to a user
+	 * @param  int 		$to  	User id of the receiving user
+	 * @param  string 	$text 	Text of the message
+	 */
+	function sendMessage($to, $text) {
+		// build the message string
+		$myid = $this->getLoggedUserId();
+		$message = $myid . '|' . $text . '|' . time();
+		// prepend the message in the receiving user message list
+		$this->r->lpush("uid:$to:messages", $message);
+	}
+
+	/**
+	 * Get messages of the logged user
+	 * @return array messages
+	 */
+	function getMessages() {
+		$uid = $this->getLoggedUserId();
+		return $this->r->lrange("uid:$uid:messages", 0, 100);
 	}
 
 	function timeAgo($ptime) {

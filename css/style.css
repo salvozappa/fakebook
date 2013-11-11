@@ -3,6 +3,11 @@ body {
 	font-family: 'Open Sans', sans-serif;
 }
 
+textarea {
+	resize: none;
+	font-size: 1.1em;
+}
+
 #topbar {
 	background-color: #009D3B;
 	height: 40px;

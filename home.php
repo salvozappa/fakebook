@@ -18,7 +18,9 @@ $updates = $fakebook->getUpdates();
 <html lang="en">
 <?php include 'head.inc.php'; ?>
 <body>
+
 	<?php include 'topbar.inc.php'; ?>
+	
 	<div id="container">
 		<?php include 'sidebar.inc.php' ?>
 		<form id="new-status" method="post" action="push-status.php">

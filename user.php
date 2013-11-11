@@ -29,15 +29,9 @@ $statuses = $fakebook->getStatuses($uid);
 <html lang="en">
 <?php include 'head.inc.php'; ?>
 <body>
-	<div id="topbar">
-		<div>
-			<span id="logo"><a href="index.php"><?= TITLE ?></a></span>
-			<img class="top-button" src="img/friend-requests.png">
-			<img class="top-button" src="img/messages.png">
-			<img class="top-button" src="img/notifications.png">
-			<input id="search" type="text">
-		</div>
-	</div>
+	
+	<?php include 'topbar.inc.php'; ?>
+	
 	<div id="container">
 		<aside id="sidebar">
 			<a href="logout.php">Logout</a>
@@ -49,6 +43,7 @@ $statuses = $fakebook->getStatuses($uid);
 				<p><?= $fullName ?> is not your friend. <a href="request-friendship.php?id=<?= $uid ?>">Request friendship</a></p>
 			</div>
 		<?php endif; ?>
+		<p><a href="send-message.php?to=<?= $uid ?>">Send a message</a></p>
 		<div class="user-feed">
 			<?php
 			foreach ($statuses as $status) {

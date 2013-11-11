@@ -7,7 +7,8 @@ $messages = array(
 	1 => 'Friendship requested',
 	2 => 'Status published',
 	3 => 'Friend request accepted',
-	4 => 'Friend request refused'
+	4 => 'Friend request refused',
+	5 => 'Message sent'
 	);
 ?>
 
