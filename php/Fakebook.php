@@ -40,7 +40,7 @@ class Fakebook {
 		$id = $this->r->incr('global:nextUserId');
 		$token = Fakebook::generateToken();
 		$email = $userData['email'];
-
+		$fullName = strtolower($userData['name'] . ' ' . $userData['surname']);
 		$this->r->set("uid:$id:email", $userData['email']);
 		$this->r->set("uid:$id:password", $userData['password']);
 		$this->r->set("uid:$id:name", $userData['name']);
@@ -48,6 +48,7 @@ class Fakebook {
 		$this->r->set("uid:$id:token", $token);
 		$this->r->set("token:$token", $id);
 		$this->r->set("email:$email:uid", $id);
+		$this->r->set("fullname:$fullName:uid", $id);
 	}
 
 	/**
@@ -216,14 +217,21 @@ class Fakebook {
 		}
 	}
 
+	/**
+	 * Get a user-id from the full name,
+	 * @param 	string	$fullName 	full name
+	 * @return 	int 	  	        user id
+	 */
+	function getUserIdFromFullName($fullName) {
+		$fullName = strtolower($fullName);
+		return $this->r->get("fullname:$fullName:uid");
+	}
+
 	function timeAgo($ptime) {
 		$etime = time() - $ptime;
-
-		if ($etime < 1)
-		{
+		if ($etime < 1) {
 			return '0 seconds';
 		}
-
 		$a = array( 12 * 30 * 24 * 60 * 60  =>  'year',
 			30 * 24 * 60 * 60       =>  'month',
 			24 * 60 * 60            =>  'day',
@@ -231,12 +239,9 @@ class Fakebook {
 			60                      =>  'minute',
 			1                       =>  'second'
 			);
-
-		foreach ($a as $secs => $str)
-		{
+		foreach ($a as $secs => $str) {
 			$d = $etime / $secs;
-			if ($d >= 1)
-			{
+			if ($d >= 1) {
 				$r = round($d);
 				return $r . ' ' . $str . ($r > 1 ? 's' : '') . ' ago';
 			}
