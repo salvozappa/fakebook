@@ -29,7 +29,7 @@ $uid = $_GET['to'];
 	<div id="container">
 		<?php include 'sidebar.inc.php' ?>
 		<section id="content">
-			<h1 style="margin-top: 0;">Send message to <a href="user.php?id=<?= $uid ?>"><?= $fakebook->getFullName($uid) ?></a>:</h1>
+			<h1 style="margin-top: 0;">Send a message to <a href="user.php?id=<?= $uid ?>"><?= $fakebook->getFullName($uid) ?></a>:</h1>
 			<form method="post" action="send-message.php">
 				<input type="hidden" name="to" value="<?= $uid ?>">
 				<textarea name="message" rows="4" cols="50"></textarea>

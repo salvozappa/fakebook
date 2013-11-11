@@ -113,11 +113,28 @@ textarea {
 	margin-bottom: 20px;
 }
 
-.status .message {
+.status .text {
+	margin: 10px 0;
+}
+
+.status .details {
+	font-size: 0.8em;
+	color: gray;
+}
+
+.message .author {
+	text-decoration: 
+}
+
+.message .text {
 	font-size: 1.2em;
 }
 
-.status .time {
+.message .actions {
+	margin: 20px 0;
+}
+
+.time {
 	font-size: 0.8em;
 	color: gray;
 }

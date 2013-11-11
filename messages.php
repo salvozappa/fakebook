@@ -19,7 +19,10 @@ $messages = $fakebook->getMessages();
 <?php include 'head.inc.php'; ?>
 <body>
 
-	<?php include 'topbar.inc.php'; ?>
+	<?php
+	$topBarSelectedIcon = 2;
+	include 'topbar.inc.php';
+	?>
 	
 	<div id="container">
 		<?php include 'sidebar.inc.php' ?>
@@ -33,12 +36,15 @@ $messages = $fakebook->getMessages();
 				$aux = explode('|',$message); ?>
 				<div class="message">
 					<div class="author"><a href="user.php?id=<?= $aux[0] ?>"><?= $fakebook->getFullName($aux[0]) ?></a></div>
-					<div class="message"><?= $aux[1] ?></div>
+					<div class="text"><?= $aux[1] ?></div>
 					<div class="time"><?= $fakebook->timeAgo($aux[2]) ?></div>
-					<a href="send-message.php?to=<?= $aux[0] ?>">Reply</a>
+					<div class="actions">
+						<a href="send-message.php?to=<?= $aux[0] ?>">Reply</a>
+					</div>
+					<hr>
 				</div>
 				<?php } ?>
-		</section>
-	</div>
-</body>
-</html>
+			</section>
+		</div>
+	</body>
+	</html>

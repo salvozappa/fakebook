@@ -19,9 +19,11 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
 	if ($action == 'accept') {
 		$fakebook->acceptFriendRequest($id);
 		$fakebook->ok(3);
+		return;
 	} else if ($action == 'refuse') {
 		$fakebook->removeFriendRequest($id);
 		$fakebook->ok(4);
+		return;
 	}
 }
 

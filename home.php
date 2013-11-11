@@ -37,8 +37,9 @@ $updates = $fakebook->getUpdates();
 				$aux = explode('|',$update); ?>
 				<div class="status">
 					<div class="author"><a href="user.php?id=<?= $aux[1] ?>"><?= $fakebook->getFullName($aux[1]) ?></a></div>
-					<div class="message"><?= $aux[2] ?></div>
-					<div class="time"><?= $fakebook->timeAgo($aux[3]) ?></div>
+					<div class="text"><?= $aux[2] ?></div>
+					<div class="details"><a href="#">Like</a> - <a href="#">0 comments</a> - <?= $fakebook->timeAgo($aux[3]) ?></div>
+					<hr>
 				</div>
 				<?php } ?>
 		</section>
