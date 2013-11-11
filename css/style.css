@@ -130,7 +130,7 @@ textarea {
 	font-size: 1.2em;
 }
 
-.message .actions {
+.message .actions, .likes, .comments {
 	margin: 20px 0;
 }
 

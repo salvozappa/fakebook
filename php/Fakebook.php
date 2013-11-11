@@ -274,6 +274,20 @@ class Fakebook {
 		return $this->r->llen("status:$statusId:comments");	
 	}
 
+	function getComments($statusId) {
+		return $this->r->lrange("status:$statusId:comments", 0, 100);
+	}
+
+	function getLikes($statusId) {
+		return $this->r->smembers("status:$statusId:likes");
+	}
+
+	function commentStatus($statusId, $text) {
+		$uid = $this->getLoggedUserId();
+		$comment = $uid . '|' . $text . '|' . time();
+		$this->r->rpush("status:$statusId:comments", $comment);
+	}
+
 	function timeAgo($ptime) {
 		$etime = time() - $ptime;
 		if ($etime < 1) {
