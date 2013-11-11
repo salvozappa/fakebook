@@ -249,6 +249,31 @@ class Fakebook {
 		return $this->r->lrange("uid:$uid:messages", 0, 100);
 	}
 
+	function likeStatus($statusId) {
+		$uid = $this->getLoggedUserId();
+		$this->r->incr("status:$statusId:likesCount");
+		$this->r->sadd("status:$statusId:likes", $uid);
+	}
+
+	function unlikeStatus($statusId) {
+		$uid = $this->getLoggedUserId();
+		$this->r->decr("status:$statusId:likesCount");
+		$this->r->srem("status:$statusId:likes", $uid);
+	}
+
+	function checkLike($statusId) {
+		$uid = $this->getLoggedUserId();
+		return $this->r->sismember("status:$statusId:likes", $uid);	
+	}
+
+	function countLikes($statusId) {
+		return $this->r->get("status:$statusId:likesCount");	
+	}
+
+	function countComments($statusId) {
+		return $this->r->llen("status:$statusId:comments");	
+	}
+
 	function timeAgo($ptime) {
 		$etime = time() - $ptime;
 		if ($etime < 1) {

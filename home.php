@@ -38,7 +38,15 @@ $updates = $fakebook->getUpdates();
 				<div class="status">
 					<div class="author"><a href="user.php?id=<?= $aux[1] ?>"><?= $fakebook->getFullName($aux[1]) ?></a></div>
 					<div class="text"><?= $aux[2] ?></div>
-					<div class="details"><a href="#">Like</a> - <a href="#">0 comments</a> - <?= $fakebook->timeAgo($aux[3]) ?></div>
+					<div class="details">
+						<?php if (!$fakebook->checkLike($aux[0])) : ?>
+							<a href="like.php?id=<?= $aux[0] ?>">Like</a>
+						<?php else : ?>
+							<a href="like.php?id=<?= $aux[0] ?>&unlike=true">Unlike</a>
+						<?php endif ?>
+						 - <a href="#"><?= $fakebook->countLikes($aux[0]) ?> likes</a>
+						 - <a href="#"><?= $fakebook->countComments($aux[0]) ?> comments</a>
+						 - <?= $fakebook->timeAgo($aux[3]) ?></div>
 					<hr>
 				</div>
 				<?php } ?>
