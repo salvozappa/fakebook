@@ -11,23 +11,34 @@ if (!$fakebook->getLoggedUserId()) {
 	header("location: index.php");
 }
 
+$updates = $fakebook->getUpdates();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <?php include 'head.inc.php'; ?>
 <body>
-	<?php include 'top-bar.inc.php'; ?>
+	<?php include 'topbar.inc.php'; ?>
 	<div id="container">
-		<aside id="left-column">
-			<p><?= $fakebook->getFullName() ?></p>
-			<a href="logout.php">Logout</a>
-		</aside>
+		<?php include 'sidebar.inc.php' ?>
 		<form id="new-status" method="post" action="push-status.php">
 			<input type="text" name="message" placeholder="Say something..!">
 			<input type="submit">
 		</form>
 		<section id="content">
 			<h1 style="margin-top: 0;">News feed:</h1>
+			<?php if (!$updates) {
+				echo 'Sorry but there are no news.';
+			}?>
+			<?php
+			foreach ($updates as $update) {
+				$aux = explode('|',$update); ?>
+				<div class="status">
+					<div class="author"><a href="user.php?id=<?= $aux[1] ?>"><?= $fakebook->getFullName($aux[1]) ?></a></div>
+					<div class="message"><?= $aux[2] ?></div>
+					<div class="time"><?= $fakebook->timeAgo($aux[3]) ?></div>
+				</div>
+				<?php } ?>
 		</section>
 	</div>
 </body>

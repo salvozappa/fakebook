@@ -16,7 +16,7 @@ $fakebook->signup($_POST);
 <html lang="en">
 <?php include 'head.inc.php'; ?>
 <body>
-	<div id="top-bar">
+	<div id="topbar">
 		<div>
 			<span id="logo"><a href="index.php"><?= TITLE ?></a></span>
 		</div>

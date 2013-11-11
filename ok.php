@@ -15,7 +15,7 @@ $messages = array(
 <html lang="en">
 <?php include 'head.inc.php'; ?>
 <body>
-	<?php include 'top-bar.inc.php'; ?>
+	<?php include 'topbar.inc.php'; ?>
 	<div id="container" style="margin-top: 50px;">
 		<h1>Ok</h1>
 		<?= $messages[$code]; ?><br><br>

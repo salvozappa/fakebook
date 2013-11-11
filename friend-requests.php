@@ -32,16 +32,16 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
 <body>
 	<?php
 	$topBarSelectedIcon = 1;
-	include 'top-bar.inc.php';
+	include 'topbar.inc.php';
 	?>
 	<div id="container">
-		<aside id="left-column">
-			<p><?= $fakebook->getFullName() ?></p>
-			<a href="logout.php">Logout</a>
-		</aside>
+		<?php include 'sidebar.inc.php' ?>
 		<section id="content">
 			<h1 style="margin-top: 0;">Friends requests:</h1>
 			<table>
+			<?php if (!$friendRequests) {
+				echo 'Sorry but there are no friend requests.';
+			} ?>
 			<?php foreach ($friendRequests as $rid) : ?>
 			<tr>
 				<td style="width:250px;"><?= $fakebook->getFullName($rid) ?></td>

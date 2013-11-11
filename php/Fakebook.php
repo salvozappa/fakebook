@@ -166,6 +166,15 @@ class Fakebook {
 		return $this->r->smembers("uid:$uid:friendrequests");
 	}
 
+	function getUpdates() {
+		$uid = $this->getLoggedUserId();
+		return $this->r->lrange("uid:$uid:updates", 0, 100);
+	}
+
+	function getStatuses($uid) {
+		return $this->r->lrange("uid:$uid:statuses", 0, 100);
+	}
+
 	/**
 	 * Remove friendship
 	 * @param  int    $user1 	user id
@@ -194,14 +203,43 @@ class Fakebook {
 	function pushStatus($message) {
 		// get the logged user id
 		$uid = $this->getLoggedUserId();
+		// get the post id
+		$pid = $this->r->incr('global:nextPostId');
 		// build the status string
-		$status = $uid . '|' . $message . '|' . time();
+		$status = $pid . '|' . $uid . '|' . $message . '|' . time();
 		// push the status in the user statuses list
-		$this->r->rpush("uid:$uid:statuses");
+		$this->r->rpush("uid:$uid:statuses", $status);
 		// push the status in every friend's updates list
 		$friends = $this->r->smembers("uid:$uid:friends");
 		foreach ($friends as $fid) {
-			$this->r->rpush("uid:$fid:updates");
+			$this->r->rpush("uid:$fid:updates", $status);
+		}
+	}
+
+	function timeAgo($ptime) {
+		$etime = time() - $ptime;
+
+		if ($etime < 1)
+		{
+			return '0 seconds';
+		}
+
+		$a = array( 12 * 30 * 24 * 60 * 60  =>  'year',
+			30 * 24 * 60 * 60       =>  'month',
+			24 * 60 * 60            =>  'day',
+			60 * 60                 =>  'hour',
+			60                      =>  'minute',
+			1                       =>  'second'
+			);
+
+		foreach ($a as $secs => $str)
+		{
+			$d = $etime / $secs;
+			if ($d >= 1)
+			{
+				$r = round($d);
+				return $r . ' ' . $str . ($r > 1 ? 's' : '') . ' ago';
+			}
 		}
 	}
 }
