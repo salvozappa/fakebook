@@ -6,7 +6,9 @@ class Fakebook {
 	private $r;
 
 	function __construct() {
-		$this->r = new Predis\Client();
+		$this->r = new Predis\Client([
+			'host' => 'redis'
+		]);
 	}
 
 	/**
