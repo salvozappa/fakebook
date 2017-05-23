@@ -4,14 +4,17 @@ A easily scalable Facebook clone in PHP + Redis
 
 Requirements
 ------------
-* Redis (tested with 2.8)
-* PHP 5
+* Docker
+* Docker compose
 
-Installation
+Run
 ------------
-* Clone the repository to the desired location
-* Run redis
-* Done!
+
+```
+docker-compose up
+```
+
+The application will be available at [http://localhost:8000](http://localhost:8000)
 
 Demo & Docs
 -----------
